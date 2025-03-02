@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Switch_Light : MonoBehaviour
 {
-    private bool isPressed = false;
+    public bool isPressed = false;
     public Material Gray_Material;
     public Material Light_Material;
     public Light spotLight;
@@ -24,15 +24,13 @@ public class Switch_Light : MonoBehaviour
         {
             isPressed = false;
             ChangeObjectMaterial(Gray_Material);
-            TurnOffLight();
-            SoundLight.Stop();
+            TurnOffLight();    
         }
         else
         {
             isPressed = true;
             ChangeObjectMaterial(Light_Material);
             TurnOnLight();
-            SoundLight.Play();
         }
     }
 
@@ -54,6 +52,7 @@ public class Switch_Light : MonoBehaviour
         if (spotLight != null)
         {
             spotLight.enabled = true;
+            SoundLight.Play();
         }
     }
 
@@ -62,6 +61,7 @@ public class Switch_Light : MonoBehaviour
         if (spotLight != null)
         {
             spotLight.enabled = false;
+            SoundLight.Stop();
         }
     }
 
@@ -93,5 +93,11 @@ public class Switch_Light : MonoBehaviour
         // Устанавливаем случайный интервал для следующего моргания
         flickerInterval = Random.Range(minFlickerInterval, maxFlickerInterval);
         timer = flickerInterval;
+    }
+    
+    public void StopSoundPlaying()
+    {
+        SoundLight.Stop();
+        spotLight.enabled = false;
     }
 }

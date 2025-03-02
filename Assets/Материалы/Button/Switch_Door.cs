@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Switch_Door : MonoBehaviour
 {
-    private bool isPressed = false;
+    public bool isPressed = false;
     public Material Red_Material;
     public Material Green_Material;
     public GameObject objectToMove;
