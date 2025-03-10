@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Switch_Camera : MonoBehaviour
 {
@@ -9,6 +8,15 @@ public class Switch_Camera : MonoBehaviour
     public AudioSource SoundCamera;
     public Camera[] cameras;
     public GameObject[] buttons;
+
+    private void Start()
+    {
+        foreach (Camera camera in cameras)
+        {
+            camera.enabled = false;
+        }
+        cameras[9].enabled = true;
+    }
 
     void OnMouseDown()
     {
@@ -44,7 +52,6 @@ public class Switch_Camera : MonoBehaviour
             camera.enabled = false;
         }
         int index = Array.IndexOf(buttons, gameObject);
-        Debug.Log(index);
         cameras[index].enabled = true;
     }
 }

@@ -7,9 +7,8 @@ public class FirstPersonLook : MonoBehaviour
     public float sensitivity = 2;
     public float smoothing = 1.5f;
 
-    Vector2 velocity;
-    Vector2 frameVelocity;
-
+    Vector2 velocity = Vector2.zero;
+    Vector2 frameVelocity = Vector2.zero;
 
     void Reset()
     {
@@ -21,6 +20,10 @@ public class FirstPersonLook : MonoBehaviour
     {
         // Lock the mouse cursor to the game screen.
         Cursor.lockState = CursorLockMode.Locked;
+
+        // Ensure initial rotations are set correctly
+        transform.localRotation = Quaternion.identity;
+        character.localRotation = Quaternion.identity;
     }
 
     void Update()
@@ -33,7 +36,8 @@ public class FirstPersonLook : MonoBehaviour
         velocity.y = Mathf.Clamp(velocity.y, -90, 90);
 
         // Rotate camera up-down and controller left-right from velocity.
-        transform.localRotation = Quaternion.AngleAxis(-velocity.y, Vector3.right);
-        character.localRotation = Quaternion.AngleAxis(velocity.x, Vector3.up);
+        transform.localRotation = Quaternion.Euler(-velocity.y, 0, 0);
+        character.localRotation = Quaternion.Euler(0, velocity.x, 0);
     }
 }
+
