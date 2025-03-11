@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ public class Energy_Timer : MonoBehaviour
     public AudioSource fan,endEnergy;
     public Light[] lights;
     private bool energyDownIs = true;
+    private bool isEnergy = Scenes.isEnergy;
 
     private void Start()
     {
@@ -27,7 +29,7 @@ public class Energy_Timer : MonoBehaviour
 
     void Update()
     {
-        if (energyDownIs)
+        if (energyDownIs && !isEnergy)
         {
             leftIs = leftDoor.isPressed;
             rightIs = rightDoor.isPressed;
@@ -66,7 +68,7 @@ public class Energy_Timer : MonoBehaviour
                 speed = 0.5f;
             }
         }
-        else
+        else if (!isEnergy)
         {
             timer += Time.deltaTime;
             if (timer >= speed)

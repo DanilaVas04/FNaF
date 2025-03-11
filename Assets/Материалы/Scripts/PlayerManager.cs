@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         if (death) 
         {
             Cursor.lockState = CursorLockMode.Confined;
-            SceneManager.LoadSceneAsync("Menu"); 
+            SceneManager.LoadSceneAsync("MainMenu"); 
         }
     }
 }
