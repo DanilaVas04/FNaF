@@ -1,9 +1,6 @@
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Animatronics : MonoBehaviour
 {
@@ -25,13 +22,15 @@ public class Animatronics : MonoBehaviour
     public string[] animeName;
     public GameObject[] map;
     public GameObject lightScream;
-    private int difficult = 2;
+    private int difficult;
     public GameObject[] pointMove;
 
-    private float timerMax = 10f;
-    private float timeNow = 10f;
-    private int random,randomPoint;
-    private float distance;
+    private float timerMax = 15f;
+    private float timeNow = 15f;
+    private int random;
+    private float distanceToTarget,dist;
+    private int currentPointIndex = -1;
+    private bool isAttack = false;
 
     private void Start()
     {
@@ -41,73 +40,91 @@ public class Animatronics : MonoBehaviour
         jump = player.GetComponent<Jump>();
         crouch = player.GetComponent<Crouch>();
         look = playerCamera.GetComponent<FirstPersonLook>();
-        //switch (nameAnimatronic)
-        //{
-        //    case "Freddy":
-        //        difficult = Scenes.Freddy;
-        //        break;
-        //    case "Bonnie":
-        //        difficult = Scenes.Bonnie;
-        //        break;
-        //    case "Chika":
-        //        difficult = Scenes.Chica;
-        //        break;
-        //    case "Foxy":
-        //        difficult = Scenes.Foxy;
-        //        break;
-        //}
+        SetDifficulty();
     }
 
-    private void Update()
-    {     
+    private void SetDifficulty()
+    {
+        switch (nameAnimatronic)
+        {
+            case "Freddy":
+                difficult = Scenes.Freddy;
+                break;
+            case "Bonnie":
+                difficult = Scenes.Bonnie;
+                break;
+            case "Chica":
+                difficult = Scenes.Chica;
+                break;
+        }
+    }
+
+    private void FixedUpdate()
+    {
         if (difficult != 0)
         {
-            if (timeNow == 0f) { random = Random.Range(1, 101); Debug.Log(random.ToString()); }
-            if (timeNow == 0f) { randomPoint = Random.Range(0, pointMove.Length); Debug.Log("====" + randomPoint.ToString()); }
-            timeNow += Time.deltaTime;
-
-            distance = Vector3.Distance(target.position, transform.position);
-            if (random <= difficult && timeNow < timerMax)
+            HandleTimer();
+            distanceToTarget = Vector3.Distance(target.position, transform.position);
+            if (timeNow < timerMax)
             {
-                distance = Vector3.Distance(target.position, transform.position);
-                runningToPlayer(distance);
+                if (isAttack)
+                {
+                    RunToPlayer(distanceToTarget);
+                }
+                else if (random <= difficult + 30)
+                {
+                    dist = Vector3.Distance(pointMove[currentPointIndex].transform.position, transform.position);
+                    RunToPoint(dist, pointMove[currentPointIndex].transform.position);
+                }
+                else
+                {
+                    StandInPlace(distanceToTarget);
+                }
             }
-            else if (random>difficult && random<=60 && timeNow < timerMax)
-            {              
-                distance = Vector3.Distance(pointMove[randomPoint].transform.position, transform.position);
-                runningToPoint(distance, pointMove[randomPoint].transform.position);
-            }
-            else if (timeNow < timerMax)
+            else if (!isAttack && pointMove.Length-1==currentPointIndex)
             {
-                distance = Vector3.Distance(target.position, transform.position);
-                standInPlace(distance);             
+                isAttack = true;
+                timeNow = 0f;
+                currentPointIndex = -1;
+                timerMax = 20f;
             }
             else
             {
                 timeNow = 0f;
+                isAttack = false;
+                timerMax = 15f;
             }
         }
     }
 
-    private void runningToPlayer(float distance)
+    private void HandleTimer()
     {
-        if (distance > agent.stoppingDistance)
+        if (timeNow == 0f)
+        {
+            random = Random.Range(1, 101);
+            anime.SetBool("isRun", false);
+            agent.isStopped = true;
+            agent.ResetPath();       
+            if (random <= difficult + 30)
+            {
+                currentPointIndex = (currentPointIndex + 1) % pointMove.Length;
+            }
+        }
+        timeNow += Time.deltaTime;
+    }
+
+    private void RunToPlayer(float distance)
+    {
+        if (distance > agent.stoppingDistance && !isDie)
         {
             anime.SetBool("isRun", true);
-            if (Vector3.Distance(target.position, transform.position) <= agent.stoppingDistance && !isDie)
-            {
-                StopAgent();
-            }
-            else if (!isDie)
-            {
-                // Двигаться к цели
-                agent.SetDestination(target.position);
-                LookTarget(target.position);
-                anime.Play(animeName[1]);
-            }else
-            {
-                anime.SetBool("isRun", false);
-            }
+            agent.SetDestination(target.position);
+            LookTarget(target.position);
+            anime.Play(animeName[1]);
+        }
+        else if (distance <= agent.stoppingDistance-0.5 && !isDie)
+        {
+            StopAgent();
         }
         else
         {
@@ -115,47 +132,49 @@ public class Animatronics : MonoBehaviour
         }
     }
 
-    private void runningToPoint(float distance, Vector3 point)
+    private void RunToPoint(float distance, Vector3 point)
     {
-        anime.SetBool("isRun", true);
-        if (Vector3.Distance(target.position, transform.position) <= agent.stoppingDistance && !isDie)
+        if (distanceToTarget <= agent.stoppingDistance-0.5 && !isDie)
         {
             StopAgent();
         }
-        else if (distance <= agent.stoppingDistance)
+        if (distance > agent.stoppingDistance && !isDie)
         {
-            anime.SetBool("isRun", false);
-            agent.isStopped = true;
-            agent.ResetPath();
-        }
-        else if (!isDie)
-        {
+            anime.SetBool("isRun", true);
             agent.SetDestination(point);
             LookTarget(point);
             anime.Play(animeName[1]);
         }
+        else if (distance <= agent.stoppingDistance)
+        {
+            agent.ResetPath();
+            anime.SetBool("isRun", false);
+            agent.SetDestination(point);
+            LookTarget(target.position);
+            agent.isStopped = true;
+            
+        }
     }
 
-    private void standInPlace(float distance)
+    private void StandInPlace(float distance)
     {
         anime.SetBool("isRun", false);
         agent.isStopped = true;
         agent.ResetPath();
-        if (distance <= agent.stoppingDistance && !isDie)
+        LookTarget(target.position);
+
+        if (distance <= agent.stoppingDistance-0.5 && !isDie)
         {
             StopAgent();
         }
     }
 
-    private async Task StopAgent()
+    private void StopAgent()
     {
         agent.isStopped = true;
         agent.ResetPath();
         isDie = true;
-        movement.enabled = false;
-        jump.enabled = false;
-        crouch.enabled = false;
-        look.enabled = false;
+        DisablePlayerControls();
         lightScream.SetActive(true);
         playerCamera.depth = 0;
         dieCamera.depth = 1;
@@ -163,10 +182,22 @@ public class Animatronics : MonoBehaviour
         anime.Play(animeName[0]);
         anime.SetBool("isDie", true);
         anime.SetBool("isRun", false);
-        foreach (GameObject m in map) { m.SetActive(false); }       
-        await Task.Delay(4000);
+
+        foreach (GameObject m in map)
+        {
+            m.SetActive(false);
+        }
+
         PlayerManager.instance.death = true;
         LookTarget(target.position);
+    }
+
+    private void DisablePlayerControls()
+    {
+        movement.enabled = false;
+        jump.enabled = false;
+        crouch.enabled = false;
+        look.enabled = false;
     }
 
     void LookTarget(Vector3 targetPoint)

@@ -6,7 +6,7 @@ using UnityEngine.Video;
 
 public class Night_Timer : MonoBehaviour
 {
-    public float duration = 120.0f; // Продолжительность таймера в секундах
+    public float duration = 80.0f; // Продолжительность таймера в секундах
     private float timer = 0;
     public TMP_Text time;
     public VideoPlayer videoPlayer;

@@ -33,8 +33,8 @@ public class Energy_Timer : MonoBehaviour
         {
             leftIs = leftDoor.isPressed;
             rightIs = rightDoor.isPressed;
-            if (rightIs && leftIs) { speed = 4.0f; }
-            else if (rightIs || leftIs) { speed = 8.0f; }
+            if (rightIs && leftIs) { speed = 2.0f; }
+            else if (rightIs || leftIs) { speed = 5.0f; }
             else { speed = 20.0f; }
 
             if (int.Parse(energy.text) > 0)
