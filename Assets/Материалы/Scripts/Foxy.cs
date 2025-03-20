@@ -70,13 +70,16 @@ public class Foxy : MonoBehaviour
                 }
                 else if (random <= difficult + 30 && k == 2)
                 {
-                    anime.SetBool("isHaywire", true);
-                    anime.Play(animeName[2]);
-                    LookTarget(target.position);
                     if (distanceToTarget <= agent.stoppingDistance - 0.5 && !isDie)
                     {
                         StopAgent();
                     }
+                    else
+                    {
+                        anime.SetBool("isHaywire", true);
+                        anime.Play(animeName[2]);
+                        LookTarget(target.position);
+                    }                     
                 }
                 else if (random <= difficult + 30 && k == 4 && !isAttack)
                 {
