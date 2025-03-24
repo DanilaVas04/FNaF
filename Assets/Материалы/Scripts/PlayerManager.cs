@@ -5,7 +5,9 @@ public class PlayerManager : MonoBehaviour
 {
     private float timerDuration = 4f;
     private float timeElapsed = 0f;
+    private int random;
     public KeyCode exitMenu = KeyCode.Escape;
+    public GameObject goldenFreddy;
     #region Singleton
     public static PlayerManager instance;
 
@@ -33,5 +35,11 @@ public class PlayerManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             SceneManager.LoadSceneAsync("MainMenu"); 
         }
+    }
+
+    private void Start()
+    {
+        random = Random.Range(0, 101);
+        if (random <= 5) { goldenFreddy.SetActive(true); }
     }
 }
