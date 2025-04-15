@@ -24,7 +24,11 @@ MonoBehaviour:
     photo: https://justplaygames.ru/public/icon_player.png
     payingStatus: paying
     serverTime: 1721201231000
+<<<<<<< Updated upstream
   AdWhenLoadingScene: 1
+=======
+  AdWhenLoadingScene: 0
+>>>>>>> Stashed changes
   showFirstAd: 1
   rewardedAfterClosing: 1
   adDisplayCalls: 0
@@ -32,7 +36,11 @@ MonoBehaviour:
   durationOfAdSimulation: 0.5
   loadAdWithDelaySimulation: 0
   testErrorOfRewardedAdsInEditor: 0
+<<<<<<< Updated upstream
   saveCloud: 0
+=======
+  saveCloud: 1
+>>>>>>> Stashed changes
   flush: 0
   localSaveSync: 1
   saveCloudInterval: 5
@@ -40,7 +48,11 @@ MonoBehaviour:
   quitGameParameters:
     objectName: YandexGame
     methodName: _SaveProgress
+<<<<<<< Updated upstream
   leaderboardEnable: 0
+=======
+  leaderboardEnable: 1
+>>>>>>> Stashed changes
   saveScoreAnonymousPlayers: 1
   leaderboardSimulation:
   - technoName: advanced
@@ -182,7 +194,11 @@ MonoBehaviour:
     thisPlayer:
       rank: 2
       score: 10
+<<<<<<< Updated upstream
   LocalizationEnable: 0
+=======
+  LocalizationEnable: 1
+>>>>>>> Stashed changes
   callingLanguageCheck: 1
   translateMethod: 0
   domainAutoLocalization: com

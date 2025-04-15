@@ -44,8 +44,13 @@ PlayerSettings:
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
+<<<<<<< Updated upstream
   defaultScreenWidthWeb: 1920
   defaultScreenHeightWeb: 1080
+=======
+  defaultScreenWidthWeb: 16
+  defaultScreenHeightWeb: 9
+>>>>>>> Stashed changes
   m_StereoRenderingPath: 0
   m_ActiveColorSpace: 1
   unsupportedMSAAFallback: 0
@@ -537,7 +542,28 @@ PlayerSettings:
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
-  m_TemplateCustomTags: {}
+  m_TemplateCustomTags:
+    CHOOSE_LOADING_TYPE: 0
+    CONFIGURE_SHADOWS_AROUND_CANVAS: 
+    CONNECT_PLUGIN: YG1.6.3
+    CUSTOMIZE_BARS_BACKGROUND: backgroundColor = "#8B00FF"
+    CUSTOMIZE_LOADING_SCREEN_BACKGROUND: backgroundImage = "url('background.jpg')
+    CUSTOMIZE_LOGO: backgroundImage = "url('logo.png')"
+    CUSTOM_EVENT_IN_CSS: 
+    CUSTOM_EVENT_IN_HTML: 
+    CUSTOM_EVENT_IN_JS: 
+    DISABLE_CONSOLE_MESSAGES: 
+    GP_GAMEREADY_AUTOCALL_DELAY: 
+    GP_PROJECT_ID: 
+    GP_SHOW_PRELOADER_AD: 
+    GP_TOKEN: 
+    IGB_GAME_DISTRIBUTION_GAME_ID: 
+    IGB_VK_PLAY_GAME_ID: 
+    LOCK_ASPECT_RATIO: all
+    YG_BANNER_DYNAMIC_1: 
+    YG_BANNER_DYNAMIC_2: 
+    YG_BANNER_STATIC_1: 
+    YG_BANNER_STATIC_2: 
   mobileMTRendering:
     Android: 1
     iPhone: 1
@@ -803,7 +829,11 @@ PlayerSettings:
   webGLDebugSymbols: 0
   webGLEmscriptenArgs: 
   webGLModulesDirectory: 
+<<<<<<< Updated upstream
   webGLTemplate: PROJECT:PluginYG
+=======
+  webGLTemplate: PROJECT:AT2.1.2
+>>>>>>> Stashed changes
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
   webGLCompressionFormat: 0
