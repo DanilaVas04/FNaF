@@ -1,3 +1,4 @@
+using MyGameDevTools.SceneLoading;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,14 +12,14 @@ public class Scenes : MonoBehaviour
     public static int Freddy, Bonnie, Chica, Foxy;
     public static bool isEnergy;
 
-    public void ChangeScenes()
+    public void ChangeScenes(string loadingScene)
     {
         Freddy = int.Parse(Mob1.text);
         Bonnie = int.Parse(Mob2.text);
         Chica = int.Parse(Mob3.text);
         Foxy = int.Parse(Mob4.text);
         isEnergy = EndlessEnergy.isOn;
-        SceneManager.LoadSceneAsync(newSceneName);
+        MySceneManager.TransitionAsync(newSceneName, loadingScene);
     }
 
     public void ExitGame()

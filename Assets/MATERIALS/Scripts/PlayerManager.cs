@@ -1,3 +1,4 @@
+using MyGameDevTools.SceneLoading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,13 +28,13 @@ public class PlayerManager : MonoBehaviour
             if (timeElapsed >= timerDuration)
             {
                 Cursor.lockState = CursorLockMode.Confined;
-                SceneManager.LoadSceneAsync("MainMenu");
+                MySceneManager.TransitionAsync("MainMenu");
             } 
         }
         if (Input.GetKey(exitMenu)) 
         {
             Cursor.lockState = CursorLockMode.Confined;
-            SceneManager.LoadSceneAsync("MainMenu"); 
+            MySceneManager.TransitionAsync("MainMenu");
         }
     }
 
