@@ -31,4 +31,15 @@ public class Jump : MonoBehaviour
             Jumped?.Invoke();
         }
     }
+
+
+    public void JumpButton()
+    {
+        // Jump when the Jump button is pressed and we are on the ground.
+        if ((!groundCheck || groundCheck.isGrounded))
+        {
+            rigidbody.AddForce(Vector3.up * 100 * jumpStrength);
+            Jumped?.Invoke();
+        }
+    }
 }

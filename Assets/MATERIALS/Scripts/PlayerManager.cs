@@ -27,13 +27,13 @@ public class PlayerManager : MonoBehaviour
             timeElapsed += Time.deltaTime;
             if (timeElapsed >= timerDuration)
             {
-                Cursor.lockState = CursorLockMode.Confined;
+                //Cursor.lockState = CursorLockMode.Confined;
                 MySceneManager.TransitionAsync("MainMenu");
             } 
         }
         if (Input.GetKey(exitMenu)) 
         {
-            Cursor.lockState = CursorLockMode.Confined;
+            //Cursor.lockState = CursorLockMode.Confined;
             MySceneManager.TransitionAsync("MainMenu");
         }
     }
