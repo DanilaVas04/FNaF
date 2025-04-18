@@ -25,6 +25,7 @@ public class Crouch : MonoBehaviour
     public bool IsCrouched { get; private set; }
     public event System.Action CrouchStart, CrouchEnd;
 
+    public bool isCrounchButtonPutOn;
 
     void Reset()
     {
@@ -36,7 +37,7 @@ public class Crouch : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetKey(key))
+        if (Input.GetKey(key) || isCrounchButtonPutOn)
         {
             // Enforce a low head.
             if (headToLower)
@@ -109,8 +110,17 @@ public class Crouch : MonoBehaviour
         }
     }
 
-    
 
+    public void isCrounchButtonDown()
+    {
+        isCrounchButtonPutOn = true;
+
+    }
+
+    public void isCrounchButtonUp()
+    {
+        isCrounchButtonPutOn = false;
+    }
 
     #region Speed override.
     void SetSpeedOverrideActive(bool state)
