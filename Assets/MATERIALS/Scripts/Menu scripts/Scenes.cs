@@ -12,6 +12,11 @@ public class Scenes : MonoBehaviour
     public static int Freddy, Bonnie, Chica, Foxy;
     public static bool isEnergy;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void ChangeScenes(string loadingScene)
     {
         Freddy = int.Parse(Mob1.text);

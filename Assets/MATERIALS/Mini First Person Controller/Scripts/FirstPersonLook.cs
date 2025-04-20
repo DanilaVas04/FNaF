@@ -64,29 +64,33 @@ public class FirstPersonLook : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began)
+            // Check if the touch is on the right half of the screen
+            if (touch.position.x > Screen.width / 2)
             {
-                previousTouchPosition = touch.position;
-                isTouching = true;
-            }
-            else if (touch.phase == TouchPhase.Moved && isTouching)
-            {
-                Vector2 touchDelta = touch.position - previousTouchPosition;
-                previousTouchPosition = touch.position;
+                if (touch.phase == TouchPhase.Began)
+                {
+                    previousTouchPosition = touch.position;
+                    isTouching = true;
+                }
+                else if (touch.phase == TouchPhase.Moved && isTouching)
+                {
+                    Vector2 touchDelta = touch.position - previousTouchPosition;
+                    previousTouchPosition = touch.position;
 
-                // Get smooth velocity.
-                Vector2 rawFrameVelocity = Vector2.Scale(touchDelta, Vector2.one * sensitivity * Time.deltaTime);
-                frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
-                velocity += frameVelocity;
-                velocity.y = Mathf.Clamp(velocity.y, -90, 90);
+                    // Get smooth velocity.
+                    Vector2 rawFrameVelocity = Vector2.Scale(touchDelta, Vector2.one * sensitivity * Time.deltaTime);
+                    frameVelocity = Vector2.Lerp(frameVelocity, rawFrameVelocity, 1 / smoothing);
+                    velocity += frameVelocity;
+                    velocity.y = Mathf.Clamp(velocity.y, -90, 90);
 
-                // Rotate camera up-down and controller left-right from velocity.
-                transform.localRotation = Quaternion.Euler(-velocity.y, 0, 0);
-                character.localRotation = Quaternion.Euler(0, velocity.x, 0);
-            }
-            else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
-            {
-                isTouching = false;
+                    // Rotate camera up-down and controller left-right from velocity.
+                    transform.localRotation = Quaternion.Euler(-velocity.y, 0, 0);
+                    character.localRotation = Quaternion.Euler(0, velocity.x, 0);
+                }
+                else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    isTouching = false;
+                }
             }
         }
     }

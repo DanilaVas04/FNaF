@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using YG;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -24,6 +25,15 @@ public class PlayerManager : MonoBehaviour
 
     public GameObject[] uiElements;
     private bool isUIHidden = true;
+
+    private void Start()
+    {
+        HideUI();
+        random = Random.Range(0, 101);
+        if (random <= 5) { goldenFreddy.SetActive(true); }
+
+        InvokeRepeating("ShowAd",0f,60f);
+    }
 
     private void Update()
     {
@@ -58,7 +68,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         // Проверяем нажатия на экран
-        if (Input.GetMouseButtonDown(0) && isUIHidden)
+        if (Input.GetMouseButton(0) && isUIHidden)
         {
             ShowUI();
             isUIHidden = false;
@@ -66,12 +76,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        HideUI();
-        random = Random.Range(0, 101);
-        if (random <= 5) { goldenFreddy.SetActive(true); }
-    }
+    
 
     public void ExitGame()
     {
@@ -100,5 +105,11 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         HideUI();
         isUIHidden = true;
+    }
+
+
+    public void ShowAd()
+    {
+        YandexGame.FullscreenShow();
     }
 }
