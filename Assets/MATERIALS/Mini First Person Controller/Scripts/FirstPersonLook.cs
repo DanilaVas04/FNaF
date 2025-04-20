@@ -60,7 +60,7 @@ public class FirstPersonLook : MonoBehaviour
 
     void HandleTouchInput()
     {
-        if (Input.touchCount > 0 && !Joystick.IsJoystickActive)
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
