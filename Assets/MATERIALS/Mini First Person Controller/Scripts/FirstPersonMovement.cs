@@ -15,7 +15,7 @@ public class FirstPersonMovement : MonoBehaviour
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
-    public DynamicJoystick joystick;
+    public FixedJoystick joystick;
 
     void Awake()
     {
@@ -34,9 +34,26 @@ public class FirstPersonMovement : MonoBehaviour
         {
             targetMovingSpeed = speedOverrides[speedOverrides.Count - 1]();
         }
+
+        // Get targetVelocity from input.
+        Vector2 targetVelocity = Vector2.zero;
+
+        // PC Input
+        targetVelocity += new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * targetMovingSpeed;
+
+        // Mobile Input
+        if (joystick != null)
+        {
+            targetVelocity += new Vector2(joystick.Horizontal, joystick.Vertical) * targetMovingSpeed;
+        }
+
+        // Apply movement
+        rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
+
+
         // PC
         // Get targetVelocity from input.
-        //Vector2 targetVelocity =new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
+        //Vector2 targetVelocity = new Vector2( Input.GetAxis("Horizontal") * targetMovingSpeed, Input.GetAxis("Vertical") * targetMovingSpeed);
 
         //// Apply movement.
         //rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
@@ -44,9 +61,9 @@ public class FirstPersonMovement : MonoBehaviour
 
         // MOBILE
         // Get targetVelocity from joystick input
-        Vector2 targetVelocity = new Vector2(joystick.Horizontal * targetMovingSpeed, joystick.Vertical * targetMovingSpeed);
+        //Vector2 targetVelocity = new Vector2(joystick.Horizontal * targetMovingSpeed, joystick.Vertical * targetMovingSpeed);
 
         // Apply movement
-        rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
+        //rigidbody.linearVelocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.y);
     }
 }
