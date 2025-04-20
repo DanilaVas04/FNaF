@@ -3736,7 +3736,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: START
+  m_Text: "\u0421\u0422\u0410\u0420\u0422"
 --- !u!222 &1839127967
 CanvasRenderer:
   m_ObjectHideFlags: 0

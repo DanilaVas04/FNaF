@@ -28,6 +28,11 @@ public class FirstPersonLook : MonoBehaviour
 
     void Update()
     {
+        if (Joystick.IsJoystickActive)
+        {
+            // Do not process camera input if the joystick is active
+            return;
+        }
 
         // Always handle mouse input
         HandleMouseInput();

@@ -1,2 +1,2 @@
-Build path: D:/!UnityProjects/!!!BUILDS/FNAFDANILA/FNAFDANILA_BETA_FBX_1_4_COMPRESSED
-Build number: 5
+Build path: D:/!UnityProjects/!!!BUILDS/FNAFDANILA/FNAFDANILA_1_2
+Build number: 8
